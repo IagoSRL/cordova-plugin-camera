@@ -36,7 +36,7 @@
 
 #define CDV_PHOTO_PREFIX @"cdv_photo_"
 
-#define PluginLocalizedString(key, comment) [[NSBundle bundleForClass: [self class]] localizedStringForKey:(key) value:@"" table:nil]
+#define PluginLocalizedString(key, comment) [[NSBundle bundleWithPath: [[NSBundle mainBundle] pathForResource:NSStringFromClass([self class]) ofType: @"bundle"]] localizedStringForKey:(key) value:@"" table:nil]
 #define PluginLocalizedStringFromTable(key, tbl, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:(tbl)]
 
 
@@ -156,7 +156,7 @@ static NSString* toBase64(NSData* data) {
         BOOL hasCamera = [UIImagePickerController isSourceTypeAvailable:pictureOptions.sourceType];
         if (!hasCamera) {
             NSLog(@"Camera.getPicture: source type %lu not available.", (unsigned long)pictureOptions.sourceType);
-            CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No camera available"];
+            CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:PluginLocalizedString(@"No camera available", nil)];
             [weakSelf.commandDelegate sendPluginResult:result callbackId:command.callbackId];
             return;
         }
