@@ -36,6 +36,10 @@
 
 #define CDV_PHOTO_PREFIX @"cdv_photo_"
 
+#define PluginLocalizedString(key, comment) [[NSBundle bundleForClass: [self class]] localizedStringForKey:(key) value:@"" table:nil]
+#define PluginLocalizedStringFromTable(key, tbl, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:(tbl)]
+
+
 static NSSet* org_apache_cordova_validArrowDirections;
 
 static NSString* toBase64(NSData* data) {
@@ -164,16 +168,16 @@ static NSString* toBase64(NSData* data) {
                 authStatus == AVAuthorizationStatusRestricted) {
                 // If iOS 8+, offer a link to the Settings app
                 NSString* settingsButton = (&UIApplicationOpenSettingsURLString != NULL)
-                    ? NSLocalizedString(@"Settings", nil)
+                    ? PluginLocalizedString(@"Settings", nil)
                     : nil;
 
                 // Denied; show an alert
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[[UIAlertView alloc] initWithTitle:[[NSBundle mainBundle]
                                                          objectForInfoDictionaryKey:@"CFBundleDisplayName"]
-                                                message:NSLocalizedString(@"Access to the camera has been prohibited; please enable it in the Settings app to continue.", nil)
+                                                message:PluginLocalizedString(@"Access to the camera has been prohibited; please enable it in the Settings app to continue.", nil)
                                                delegate:weakSelf
-                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                      cancelButtonTitle:PluginLocalizedString(@"OK", nil)
                                       otherButtonTitles:settingsButton, nil] show];
                 });
             }
@@ -281,7 +285,7 @@ static NSString* toBase64(NSData* data) {
         UIImagePickerController* cameraPicker = (UIImagePickerController*)navigationController;
         
         if(![cameraPicker.mediaTypes containsObject:(NSString*)kUTTypeImage]){
-            [viewController.navigationItem setTitle:NSLocalizedString(@"Videos", nil)];
+            [viewController.navigationItem setTitle:PluginLocalizedString(@"Videos", nil)];
         }
     }
 }

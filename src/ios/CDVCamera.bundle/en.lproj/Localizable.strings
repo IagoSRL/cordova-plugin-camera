@@ -18,10 +18,10 @@
  */
 
 // Settings Apps name
-"Settings" = "Ajustes";
+"Settings" = "Settings";
 // Rights Error Message when the App has no rights to access the camera API
-"Access to the camera has been prohibited; please enable it in the Settings app to continue." = "El acceso a la cámara ha sido bloqueado; por favor habilítelo en la app Ajustes para continuar.";
+"Access to the camera has been prohibited; please enable it in the Settings app to continue." = "Access to the camera has been prohibited; please enable it in the Settings app to continue.";
 // Button text for "cancelButtonTitle" on the Rights Error Message
 "OK" = "OK";
 // Videos title
-"Videos" = "Vídeos";
+"Videos" = "Videos";
