@@ -33,6 +33,8 @@
 
 #define CDV_PHOTO_PREFIX @"cdv_photo_"
 
+#define PluginLocalizedString(key, comment) [[NSBundle bundleWithPath: [[NSBundle mainBundle] pathForResource:NSStringFromClass([self class]) ofType: @"bundle"]] localizedStringForKey:(key) value:@"" table:nil]
+
 static NSSet* org_apache_cordova_validArrowDirections;
 
 static NSString* toBase64(NSData* data) {
@@ -138,7 +140,7 @@ static NSString* toBase64(NSData* data) {
         BOOL hasCamera = [UIImagePickerController isSourceTypeAvailable:pictureOptions.sourceType];
         if (!hasCamera) {
             NSLog(@"Camera.getPicture: source type %lu not available.", (unsigned long)pictureOptions.sourceType);
-            CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No camera available"];
+            CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:PluginLocalizedString(@"No camera available", nil)];
             [weakSelf.commandDelegate sendPluginResult:result callbackId:command.callbackId];
             return;
         }
@@ -150,16 +152,16 @@ static NSString* toBase64(NSData* data) {
                 authStatus == AVAuthorizationStatusRestricted) {
                 // If iOS 8+, offer a link to the Settings app
                 NSString* settingsButton = (&UIApplicationOpenSettingsURLString != NULL)
-                    ? NSLocalizedString(@"Settings", nil)
+                    ? PluginLocalizedString(@"Settings", nil)
                     : nil;
 
                 // Denied; show an alert
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[[UIAlertView alloc] initWithTitle:[[NSBundle mainBundle]
                                                          objectForInfoDictionaryKey:@"CFBundleDisplayName"]
-                                                message:NSLocalizedString(@"Access to the camera has been prohibited; please enable it in the Settings app to continue.", nil)
+                                                message:PluginLocalizedString(@"Access to the camera has been prohibited; please enable it in the Settings app to continue.", nil)
                                                delegate:self
-                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                      cancelButtonTitle:PluginLocalizedString(@"OK", nil)
                                       otherButtonTitles:settingsButton, nil] show];
                 });
             }
@@ -267,7 +269,7 @@ static NSString* toBase64(NSData* data) {
         UIImagePickerController* cameraPicker = (UIImagePickerController*)navigationController;
         
         if(![cameraPicker.mediaTypes containsObject:(NSString*)kUTTypeImage]){
-            [viewController.navigationItem setTitle:NSLocalizedString(@"Videos", nil)];
+            [viewController.navigationItem setTitle:PluginLocalizedString(@"Videos", nil)];
         }
     }
 }
